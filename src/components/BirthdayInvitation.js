@@ -8,10 +8,12 @@ import Countdown from '@/components/Countdown';
 import EventDetails from '@/components/EventDetails';
 import DressCode from '@/components/DressCode';
 import Gallery from '@/components/Gallery';
+import RsvpSection from '@/components/RsvpSection';
 import FinalSection from '@/components/FinalSection';
 import MusicPlayer from '@/components/MusicPlayer';
 import SectionDivider from '@/components/SectionDivider';
 import { birthdayConfig } from '@/lib/birthday-config';
+import GiftSection from '@/components/GiftSection';
 
 export default function BirthdayInvitation({ guestName = 'Special Guest' }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -116,9 +118,14 @@ export default function BirthdayInvitation({ guestName = 'Special Guest' }) {
 
             <SectionDivider variant="cake" />
 
+            
             <Gallery />
 
             <SectionDivider variant="sparkles" />
+
+            <GiftSection /> 
+
+            <RsvpSection />
 
             <FinalSection />
           </div>

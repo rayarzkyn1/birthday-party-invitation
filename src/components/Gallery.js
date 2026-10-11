@@ -10,6 +10,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
+  Star,
 } from 'lucide-react';
 import { birthdayConfig } from '@/lib/birthday-config';
 
@@ -43,10 +44,7 @@ function GalleryPlaceholder({ index }) {
 }
 
 /**
- * Bento grid layout classes for 8 items.
- * - Mobile (2 cols): some items span full width
- * - sm (3 cols): adjusted spans
- * - lg (4 cols): hero image + tall image
+ * Bento grid layout untuk 8 foto.
  */
 const bentoLayout = [
   'col-span-2 row-span-1 sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2 aspect-[4/3] sm:aspect-auto sm:min-h-[320px] lg:min-h-[400px]',
@@ -97,7 +95,7 @@ function GalleryItem({ image, index, onImageClick }) {
         <GalleryPlaceholder index={index} />
       )}
 
-      {/* Hover overlay with gradient and zoom icon */}
+      {/* Hover overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#170D2B]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 z-10 flex items-center justify-center">
         <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-400">
           <ZoomIn className="w-5 h-5 text-white" />
@@ -107,9 +105,91 @@ function GalleryItem({ image, index, onImageClick }) {
   );
 }
 
+/**
+ * FeaturedPhoto — foto spotlight di atas grid, full-width dengan style khusus.
+ */
+function FeaturedPhoto({ image, onImageClick }) {
+  const [imgError, setImgError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+      className="relative mb-8 sm:mb-10 md:mb-12 group"
+    >
+      {/* Outer glow */}
+      <div className="absolute -inset-2 sm:-inset-3 rounded-3xl bg-gradient-to-br from-electric-purple/40 via-hot-pink/40 to-neon-cyan/40 blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500" />
+
+      {/* Border gradient wrapper */}
+      <div
+        className="relative rounded-3xl p-[2px] bg-gradient-to-br from-electric-purple via-hot-pink to-neon-cyan overflow-hidden cursor-pointer shadow-[0_0_40px_rgba(139,92,246,0.4)]"
+        onClick={() => !imgError && imgLoaded && onImageClick()}
+      >
+        {/* Inner container */}
+        <div className="relative rounded-[22px] overflow-hidden aspect-[4/5] sm:aspect-[16/10] md:aspect-[16/9] bg-deep-purple">
+          {!imgError ? (
+            <>
+              {!imgLoaded && <GalleryPlaceholder index={0} />}
+              <img
+  src={image.src}
+  alt={image.alt}
+  className={`w-full h-full object-contain transition-all duration-700 group-hover:scale-[1.02] ${
+    imgLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0'
+  }`}
+                onError={() => setImgError(true)}
+                onLoad={() => setImgLoaded(true)}
+                loading="eager"
+              />
+            </>
+          ) : (
+            <GalleryPlaceholder index={0} />
+          )}
+
+          {/* Gradient overlay from bottom */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#170D2B]/90 via-[#170D2B]/20 to-transparent pointer-events-none" />
+
+          {/* Badge top-left */}
+          <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
+            <Star className="w-3.5 h-3.5 text-yellow-300 fill-yellow-300" />
+            <span className="text-xs font-bold tracking-wider text-white uppercase">
+              Featured
+            </span>
+          </div>
+
+          {/* Zoom icon top-right (muncul saat hover) */}
+          <div className="absolute top-4 right-4 sm:top-5 sm:right-5 z-10 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <ZoomIn className="w-5 h-5 text-white" />
+          </div>
+
+          {/* Caption bottom */}
+          <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7 md:p-8 z-10 pointer-events-none">
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-4 h-4 text-yellow-300" />
+              <span className="text-xs font-medium tracking-widest text-yellow-300 uppercase">
+                Spotlight
+              </span>
+            </div>
+            <h3 className="text-xl sm:text-2xl md:text-4xl font-black text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+              {image.caption || 'The Birthday Girl ✨'}
+            </h3>
+          </div>
+
+          {/* Shine effect saat hover */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden">
+            <div className="absolute top-0 -left-full w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg] group-hover:left-full transition-all duration-1000" />
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Gallery() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
-  const { gallery } = birthdayConfig;
+  const { gallery, featuredPhoto } = birthdayConfig;
 
   const openLightbox = useCallback((index) => {
     setLightboxIndex(index);
@@ -119,19 +199,22 @@ export default function Gallery() {
     setLightboxIndex(null);
   }, []);
 
+  // Build combined array untuk lightbox: featured dulu, lalu semua gallery
+  const allPhotos = featuredPhoto ? [featuredPhoto, ...gallery] : gallery;
+
   const goToPrev = useCallback(() => {
     setLightboxIndex((prev) =>
-      prev !== null ? (prev - 1 + gallery.length) % gallery.length : null
+      prev !== null ? (prev - 1 + allPhotos.length) % allPhotos.length : null
     );
-  }, [gallery.length]);
+  }, [allPhotos.length]);
 
   const goToNext = useCallback(() => {
     setLightboxIndex((prev) =>
-      prev !== null ? (prev + 1) % gallery.length : null
+      prev !== null ? (prev + 1) % allPhotos.length : null
     );
-  }, [gallery.length]);
+  }, [allPhotos.length]);
 
-  // Keyboard support: Escape, ArrowLeft, ArrowRight
+  // Keyboard support
   useEffect(() => {
     if (lightboxIndex === null) return;
 
@@ -145,7 +228,7 @@ export default function Gallery() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [lightboxIndex, closeLightbox, goToPrev, goToNext]);
 
-  // Body scroll lock when lightbox is open
+  // Body scroll lock
   useEffect(() => {
     if (lightboxIndex !== null) {
       document.body.style.overflow = 'hidden';
@@ -171,7 +254,6 @@ export default function Gallery() {
           transition={{ duration: 0.6 }}
           className="text-center mb-10 sm:mb-12 md:mb-14"
         >
-          {/* Icon row with camera + sparkles */}
           <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4">
             <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-hot-pink" />
             <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
@@ -182,20 +264,27 @@ export default function Gallery() {
 
           <div className="section-divider" />
 
-          {/* Subtitle — lebih menarik & personal */}
           <p className="text-soft-white/60 mt-4 text-xs sm:text-sm">
             A collection of beautiful memories 📸
           </p>
         </motion.div>
 
-        {/* Bento Grid - 2 cols mobile, 3 cols sm, 4 cols lg */}
+        {/* ===== FEATURED PHOTO (SPOTLIGHT) ===== */}
+        {featuredPhoto && (
+          <FeaturedPhoto
+            image={featuredPhoto}
+            onImageClick={() => openLightbox(0)}
+          />
+        )}
+
+        {/* ===== BENTO GRID (8 FOTO LAINNYA) ===== */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 auto-rows-auto">
           {gallery.map((image, index) => (
             <GalleryItem
               key={index}
               image={image}
               index={index}
-              onImageClick={openLightbox}
+              onImageClick={(idx) => openLightbox(featuredPhoto ? idx + 1 : idx)}
             />
           ))}
         </div>
@@ -223,7 +312,7 @@ export default function Gallery() {
 
             {/* Photo counter */}
             <div className="absolute top-4 left-1/2 -translate-x-1/2 sm:top-6 z-20 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium tracking-wider">
-              {lightboxIndex + 1} / {gallery.length}
+              {lightboxIndex + 1} / {allPhotos.length}
             </div>
 
             {/* Previous button */}
@@ -261,8 +350,8 @@ export default function Gallery() {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={gallery[lightboxIndex]?.src}
-                alt={gallery[lightboxIndex]?.alt}
+                src={allPhotos[lightboxIndex]?.src}
+                alt={allPhotos[lightboxIndex]?.alt}
                 className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
               />
             </motion.div>

@@ -8,58 +8,70 @@
 export const birthdayConfig = {
   // Birthday person
   person: {
-    fullName: "WIYANA ANANDA OCTAVIANI",
-    nickname: "WIYANA",
+    fullName: 'WIYANA ANANDA OCTAVIANI',
+    nickname: 'WIYANA',
     age: 24,
-    tagline: "NIGHT PARTY",
+    tagline: 'NIGHT PARTY',
   },
 
   // Event details
   event: {
-    name: "24th Birthday Celebration",
+    name: '24th Birthday Celebration',
     displayTitle: "WIYANA'S 24TH BIRTHDAY",
-    date: "2026-10-19T21:00:00+07:00", // ISO 8601 with WIB timezone
-    dateDisplay: "SENIN, 19 OKTOBER 2026",
-    timeDisplay: "21.00 WIB – Selesai",
-    timezone: "Asia/Jakarta",
+    date: '2026-10-19T21:00:00+07:00', // ISO 8601 with WIB timezone
+    dateDisplay: 'SENIN, 19 OKTOBER 2026',
+    timeDisplay: '21.00 WIB – Selesai',
+    timezone: 'Asia/Jakarta',
   },
 
   // Venue
   venue: {
-    name: "TEMBAK LANGIT",
-    location: "PASKAL 23",
+    name: 'TEMBAK LANGIT',
+    location: 'PASKAL 23',
     address:
-      "Komplek Paskal Hypersquare, Jl. Pasir Kaliki No. 25–27, Kebon Jeruk, Kecamatan Andir, Kota Bandung, Jawa Barat 40241",
+      'Komplek Paskal Hypersquare, Jl. Pasir Kaliki No. 25–27, Kebon Jeruk, Kecamatan Andir, Kota Bandung, Jawa Barat 40241',
     mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Komplek+Paskal+Hypersquare%2C+Jl.+Pasir+Kaliki%2C+Bandung%2C+Jawa+Barat",
+      'https://www.google.com/maps/search/?api=1&query=Komplek+Paskal+Hypersquare%2C+Jl.+Pasir+Kaliki%2C+Bandung%2C+Jawa+Barat',
   },
 
   // Dress code
   dressCode: {
-    color: "WHITE",
-    description: "Please wear white attire to match our party theme",
+    color: 'WHITE',
+    description: 'Please wear white attire to match our party theme',
   },
 
   // Default guest name when no query parameter is provided
-  defaultGuestName: "Special Guest",
+  defaultGuestName: 'Special Guest',
 
   // Theme colors
   theme: {
-    deepPurple: "#170D2B",
-    electricPurple: "#8B5CF6",
-    hotPink: "#FF4FA3",
-    neonCyan: "#38E8FF",
-    softWhite: "#FFF9F5",
-    accentYellow: "#FFE66D",
+    deepPurple: '#170D2B',
+    electricPurple: '#8B5CF6',
+    hotPink: '#FF4FA3',
+    neonCyan: '#38E8FF',
+    softWhite: '#FFF9F5',
+    accentYellow: '#FFE66D',
   },
 
   // Music configuration
   music: {
-    src: "/music/niki_every_summertime.mp3",
-    title: "Every Summertime - NIKI",
+    src: '/music/niki_every_summertime.mp3',
+    title: 'Every Summertime - NIKI',
   },
 
-  // Gallery images (replace placeholder paths with actual images)
+  // ============================================================
+  // ⭐ FEATURED PHOTO — Foto utama / spotlight di atas gallery
+  // Ganti caption sesuai keinginan
+  // ============================================================
+  featuredPhoto: {
+    src: '/images/foto_utama.jpeg',
+    alt: 'Wiyana - The Birthday Girl',
+    caption: 'The Birthday Girl ✨',
+  },
+
+  // ============================================================
+  // 📸 GALLERY — 8 foto untuk grid bento (di bawah featured)
+  // ============================================================
   gallery: [
     { src: '/images/image1.jpeg', alt: 'Wiyana birthday moment 1' },
     { src: '/images/image2.jpeg', alt: 'Wiyana birthday moment 2' },
