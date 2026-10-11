@@ -14,31 +14,33 @@
   --color-glass-white: rgba(255, 255, 255, 0.06);
   --color-glass-border: rgba(255, 255, 255, 0.12);
 
-  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --font-display: 'Outfit', 'Inter', sans-serif;
+  --font-sans: var(--font-inter), 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-outfit), 'Inter', sans-serif;
 }
 
 /* ========================================
    BASE STYLES
    ======================================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
-  background-color: #170D2B;
-  color: #FFF9F5;
-  font-family: var(--font-sans);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  body {
+    background-color: #170D2B;
+    color: #FFF9F5;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 /* Scrollbar styling */
@@ -274,7 +276,6 @@ body {
   font-weight: 700;
   letter-spacing: 0.15em;
   text-align: center;
-  margin-bottom: 3rem;
   color: #FFF9F5;
 }
 

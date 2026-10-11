@@ -6,7 +6,7 @@ import { Calendar, Clock, MapPin, Navigation } from 'lucide-react';
 
 export default function EventDetails() {
   const prefersReducedMotion = useReducedMotion();
-  
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -27,7 +27,10 @@ export default function EventDetails() {
   };
 
   return (
-    <section id="event-details" className="relative py-20 px-4 z-10">
+    <section
+      id="event-details"
+      className="relative py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 z-10"
+    >
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial="hidden"
@@ -37,27 +40,36 @@ export default function EventDetails() {
           className="flex flex-col items-center"
         >
           {/* Section Title */}
-          <motion.div variants={itemVariants} className="text-center mb-16 relative">
-            <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-4 tracking-wider">
+          <motion.div
+            variants={itemVariants}
+            className="text-center mb-12 sm:mb-14 md:mb-16 relative"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-4 tracking-wider">
               EVENT DETAILS
             </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full shadow-[0_0_10px_rgba(168,85,247,0.7)]" />
+            <div className="h-1 w-20 sm:w-24 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full shadow-[0_0_10px_rgba(168,85,247,0.7)]" />
           </motion.div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 w-full mb-10 sm:mb-12">
             {/* Date & Time */}
-            <motion.div variants={itemVariants} className="relative group rounded-2xl p-1 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 transition-colors duration-300">
-              <div className="bg-slate-900/80 backdrop-blur-md rounded-xl p-6 h-full border border-white/5 flex flex-col gap-6 transition-all duration-300 group-hover:bg-slate-900/60">
-                
+            <motion.div
+              variants={itemVariants}
+              className="relative group rounded-2xl p-1 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 transition-colors duration-300"
+            >
+              <div className="bg-slate-900/80 backdrop-blur-md rounded-xl p-5 sm:p-6 md:p-7 h-full border border-white/5 flex flex-col gap-5 sm:gap-6 transition-all duration-300 group-hover:bg-slate-900/60">
                 {/* Date */}
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_25px_rgba(168,85,247,0.6)] transition-shadow">
-                    <Calendar className="w-6 h-6 text-purple-400" />
+                  <div className="mt-1 flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-purple-500/20 flex items-center justify-center border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_25px_rgba(168,85,247,0.6)] transition-shadow">
+                    <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white/80 mb-1">Date</h3>
-                    <p className="text-xl font-bold text-white tracking-wide">{birthdayConfig.event.dateDisplay}</p>
+                  <div className="min-w-0">
+                    <h3 className="text-base sm:text-lg font-semibold text-white/80 mb-1">
+                      Date
+                    </h3>
+                    <p className="text-lg sm:text-xl font-bold text-white tracking-wide break-words">
+                      {birthdayConfig.event.dateDisplay}
+                    </p>
                   </div>
                 </div>
 
@@ -65,31 +77,42 @@ export default function EventDetails() {
 
                 {/* Time */}
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 flex-shrink-0 w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.4)] group-hover:shadow-[0_0_25px_rgba(236,72,153,0.6)] transition-shadow">
-                    <Clock className="w-6 h-6 text-pink-400" />
+                  <div className="mt-1 flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-pink-500/20 flex items-center justify-center border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.4)] group-hover:shadow-[0_0_25px_rgba(236,72,153,0.6)] transition-shadow">
+                    <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white/80 mb-1">Time</h3>
-                    <p className="text-xl font-bold text-white tracking-wide">{birthdayConfig.event.timeDisplay}</p>
+                  <div className="min-w-0">
+                    <h3 className="text-base sm:text-lg font-semibold text-white/80 mb-1">
+                      Time
+                    </h3>
+                    <p className="text-lg sm:text-xl font-bold text-white tracking-wide break-words">
+                      {birthdayConfig.event.timeDisplay}
+                    </p>
                   </div>
                 </div>
-                
               </div>
             </motion.div>
 
             {/* Venue & Location */}
-            <motion.div variants={itemVariants} className="relative group rounded-2xl p-1 bg-gradient-to-br from-pink-500/30 to-purple-500/30 hover:from-pink-500/50 hover:to-purple-500/50 transition-colors duration-300">
-              <div className="bg-slate-900/80 backdrop-blur-md rounded-xl p-6 h-full border border-white/5 flex flex-col gap-6 transition-all duration-300 group-hover:bg-slate-900/60">
-                
+            <motion.div
+              variants={itemVariants}
+              className="relative group rounded-2xl p-1 bg-gradient-to-br from-pink-500/30 to-purple-500/30 hover:from-pink-500/50 hover:to-purple-500/50 transition-colors duration-300"
+            >
+              <div className="bg-slate-900/80 backdrop-blur-md rounded-xl p-5 sm:p-6 md:p-7 h-full border border-white/5 flex flex-col gap-5 sm:gap-6 transition-all duration-300 group-hover:bg-slate-900/60">
                 {/* Venue */}
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 flex-shrink-0 w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.4)] group-hover:shadow-[0_0_25px_rgba(236,72,153,0.6)] transition-shadow">
-                    <MapPin className="w-6 h-6 text-pink-400" />
+                  <div className="mt-1 flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-pink-500/20 flex items-center justify-center border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.4)] group-hover:shadow-[0_0_25px_rgba(236,72,153,0.6)] transition-shadow">
+                    <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white/80 mb-1">Venue</h3>
-                    <p className="text-xl font-bold text-white tracking-wide">{birthdayConfig.venue.name}</p>
-                    <p className="text-sm text-white/60 mt-1">{birthdayConfig.venue.location}</p>
+                  <div className="min-w-0">
+                    <h3 className="text-base sm:text-lg font-semibold text-white/80 mb-1">
+                      Venue
+                    </h3>
+                    <p className="text-lg sm:text-xl font-bold text-white tracking-wide break-words">
+                      {birthdayConfig.venue.name}
+                    </p>
+                    <p className="text-xs sm:text-sm text-white/60 mt-1 break-words">
+                      {birthdayConfig.venue.location}
+                    </p>
                   </div>
                 </div>
 
@@ -97,15 +120,18 @@ export default function EventDetails() {
 
                 {/* Address */}
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_25px_rgba(168,85,247,0.6)] transition-shadow">
-                    <Navigation className="w-6 h-6 text-purple-400" />
+                  <div className="mt-1 flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-purple-500/20 flex items-center justify-center border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_25px_rgba(168,85,247,0.6)] transition-shadow">
+                    <Navigation className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white/80 mb-1">Address</h3>
-                    <p className="text-base text-gray-300 leading-relaxed">{birthdayConfig.venue.address}</p>
+                  <div className="min-w-0">
+                    <h3 className="text-base sm:text-lg font-semibold text-white/80 mb-1">
+                      Address
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-300 leading-relaxed break-words">
+                      {birthdayConfig.venue.address}
+                    </p>
                   </div>
                 </div>
-                
               </div>
             </motion.div>
           </div>
@@ -116,13 +142,12 @@ export default function EventDetails() {
               href={birthdayConfig.venue.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white transition-transform hover:scale-105 active:scale-95 bg-gradient-to-r from-[#8B5CF6] to-[#FF4FA3] shadow-[0_0_20px_rgba(139,92,246,0.5)] hover:shadow-[0_0_30px_rgba(255,79,163,0.6)]"
+              className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base text-white transition-transform hover:scale-105 active:scale-95 bg-gradient-to-r from-[#8B5CF6] to-[#FF4FA3] shadow-[0_0_20px_rgba(139,92,246,0.5)] hover:shadow-[0_0_30px_rgba(255,79,163,0.6)]"
             >
               <MapPin className="w-5 h-5" />
               Open in Google Maps
             </a>
           </motion.div>
-          
         </motion.div>
       </div>
     </section>

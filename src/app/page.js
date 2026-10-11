@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-deep-purple flex items-center justify-center">
+        <div className="min-h-screen bg-deep-black flex items-center justify-center">
           <div className="text-center">
             <div className="w-12 h-12 border-4 border-electric-purple border-t-transparent rounded-full animate-spin mx-auto mb-4" />
             <p className="text-soft-white/60 text-sm tracking-widest">

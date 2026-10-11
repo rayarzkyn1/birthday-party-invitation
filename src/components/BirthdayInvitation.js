@@ -8,12 +8,12 @@ import Countdown from '@/components/Countdown';
 import EventDetails from '@/components/EventDetails';
 import DressCode from '@/components/DressCode';
 import Gallery from '@/components/Gallery';
-import ShareInvitation from '@/components/ShareInvitation';
 import FinalSection from '@/components/FinalSection';
 import MusicPlayer from '@/components/MusicPlayer';
+import SectionDivider from '@/components/SectionDivider';
 import { birthdayConfig } from '@/lib/birthday-config';
 
-export default function BirthdayInvitation({ guestName }) {
+export default function BirthdayInvitation({ guestName = 'Special Guest' }) {
   const [isOpen, setIsOpen] = useState(false);
   const [shouldPlayMusic, setShouldPlayMusic] = useState(false);
 
@@ -22,7 +22,6 @@ export default function BirthdayInvitation({ guestName }) {
     setShouldPlayMusic(true);
   }, []);
 
-  // Prevent body scroll when opening screen is shown
   useEffect(() => {
     if (!isOpen) {
       document.body.style.overflow = 'hidden';
@@ -36,7 +35,6 @@ export default function BirthdayInvitation({ guestName }) {
 
   return (
     <>
-      {/* Opening Screen Overlay */}
       <AnimatePresence>
         {!isOpen && (
           <motion.div
@@ -49,7 +47,6 @@ export default function BirthdayInvitation({ guestName }) {
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
       {isOpen && (
         <motion.main
           initial={{ opacity: 0 }}
@@ -67,8 +64,10 @@ export default function BirthdayInvitation({ guestName }) {
           <div className="relative z-10">
             <HeroSection guestName={guestName} />
 
+            <SectionDivider variant="sparkles" />
+
             {/* Invitation Card Section */}
-            <section className="py-12 px-4 sm:px-8">
+            <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8">
               <div className="max-w-2xl mx-auto">
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
@@ -77,31 +76,50 @@ export default function BirthdayInvitation({ guestName }) {
                   transition={{ duration: 0.7 }}
                   className="invitation-card text-center"
                 >
-                  <p className="text-soft-white/60 text-sm tracking-widest uppercase mb-2">
+                  <p className="text-soft-white/60 text-xs sm:text-sm tracking-widest uppercase mb-3 sm:mb-4">
                     Birthday Invitation
                   </p>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-soft-white mb-4 font-[family-name:var(--font-display)]">
-                    Dear, <span className="neon-text-gradient">{guestName}</span>
+
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-soft-white mb-4 sm:mb-6 font-[family-name:var(--font-display)]">
+                    Dear,{' '}
+                    <span className="neon-text-gradient">{guestName}</span>
                   </h3>
-                  <p className="text-soft-white/80 text-base sm:text-lg leading-relaxed">
+
+                  <p className="text-soft-white/80 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl mx-auto">
                     You are invited to{' '}
                     <span className="text-electric-purple font-semibold">
                       {birthdayConfig.person.nickname}&apos;s
                     </span>{' '}
                     {birthdayConfig.event.name}.
                   </p>
-                  <p className="text-soft-white/60 text-sm mt-4">
-                    We would be honored by your presence at this special celebration. 🎂
+
+                  <p className="text-soft-white/60 text-xs sm:text-sm mt-4 sm:mt-6 max-w-md mx-auto">
+                    We would be honored by your presence at this special
+                    celebration. 🎂
                   </p>
                 </motion.div>
               </div>
             </section>
 
+            <SectionDivider variant="balloons" />
+
+            {/* Remaining Sections */}
             <Countdown />
+
+            <SectionDivider variant="stars" />
+
             <EventDetails />
+
+            <SectionDivider variant="confetti" />
+
             <DressCode />
+
+            <SectionDivider variant="cake" />
+
             <Gallery />
-            <ShareInvitation />
+
+            <SectionDivider variant="sparkles" />
+
             <FinalSection />
           </div>
 

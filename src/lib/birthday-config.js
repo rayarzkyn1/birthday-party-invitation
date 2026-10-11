@@ -55,18 +55,20 @@ export const birthdayConfig = {
 
   // Music configuration
   music: {
-    src: "/music/birthday-song.mp3",
-    title: "Birthday Song",
+    src: "/music/niki_every_summertime.mp3",
+    title: "Every Summertime - NIKI",
   },
 
   // Gallery images (replace placeholder paths with actual images)
   gallery: [
-    { src: "/images/gallery-1.jpg", alt: "Birthday celebration 1" },
-    { src: "/images/gallery-2.jpg", alt: "Birthday celebration 2" },
-    { src: "/images/gallery-3.jpg", alt: "Birthday celebration 3" },
-    { src: "/images/gallery-4.jpg", alt: "Birthday celebration 4" },
-    { src: "/images/gallery-5.jpg", alt: "Birthday celebration 5" },
-    { src: "/images/gallery-6.jpg", alt: "Birthday celebration 6" },
+    { src: '/images/image1.png', alt: 'Wiyana birthday moment 1' },
+    { src: '/images/image2.png', alt: 'Wiyana birthday moment 2' },
+    { src: '/images/image3.png', alt: 'Wiyana birthday moment 3' },
+    { src: '/images/image4.png', alt: 'Wiyana birthday moment 4' },
+    { src: '/images/image5.png', alt: 'Wiyana birthday moment 5' },
+    { src: '/images/image6.png', alt: 'Wiyana birthday moment 6' },
+    { src: '/images/image7.png', alt: 'Wiyana birthday moment 7' },
+    { src: '/images/image8.png', alt: 'Wiyana birthday moment 8' },
   ],
 
   // Share configuration
