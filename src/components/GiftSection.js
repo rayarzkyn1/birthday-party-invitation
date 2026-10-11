@@ -25,7 +25,7 @@ export default function GiftSection() {
   };
 
   const physicalAddress =
-    'Jl. H. Darham Cikopo No.35, RW.15, Tenjolaya, Kec. Cicalengka, Kabupaten Bandung, Jawa Barat 40395';
+    'Kostan House Kinanti, Lantai 2 No. 15, dekat Kinanti Futsal, Jl. H. Saodah I, Jatihandap, Kec. Mandalajati, Kota Bandung, Jawa Barat 40195.';
 
   const handleCopy = async (text, key) => {
     try {

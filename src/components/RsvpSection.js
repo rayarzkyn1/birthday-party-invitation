@@ -13,6 +13,7 @@ import {
   HelpCircle,
   Loader2,
   Sparkles,
+  AlertCircle,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -20,13 +21,14 @@ export default function RsvpSection() {
   const [formData, setFormData] = useState({
     name: '',
     attending: 'yes',
-    guests: 1,
+    guests: '', // ← string kosong (bukan number)
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
   const [rsvpList, setRsvpList] = useState([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
+  const [guestsError, setGuestsError] = useState('');
 
   // Fetch RSVP list on mount
   const fetchRsvpList = useCallback(async () => {
@@ -66,9 +68,60 @@ export default function RsvpSection() {
     };
   }, [fetchRsvpList]);
 
+  // Handle input guests — hanya terima digit
+  const handleGuestsChange = (e) => {
+    const raw = e.target.value;
+
+    // Hanya terima angka (termasuk kosong)
+    if (raw === '') {
+      setFormData({ ...formData, guests: '' });
+      setGuestsError('');
+      return;
+    }
+
+    // Hanya digit
+    if (!/^\d+$/.test(raw)) return;
+
+    // Batasi max 10
+    const num = parseInt(raw, 10);
+    if (num > 10) {
+      setFormData({ ...formData, guests: '10' });
+      setGuestsError('');
+      return;
+    }
+
+    // Hapus leading zero (01 → 1)
+    const cleaned = num.toString();
+    setFormData({ ...formData, guests: cleaned });
+    setGuestsError('');
+  };
+
+  // Handle blur — validasi
+  const handleGuestsBlur = () => {
+    if (formData.attending !== 'yes') return;
+
+    if (formData.guests === '' || formData.guests === '0') {
+      setGuestsError('Jumlah orang wajib diisi (min. 1)');
+    } else {
+      setGuestsError('');
+    }
+  };
+
+  // Apakah form valid untuk submit?
+  const isFormValid =
+    formData.name.trim() !== '' &&
+    (formData.attending !== 'yes' ||
+      (formData.guests !== '' && parseInt(formData.guests, 10) >= 1));
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name.trim()) return;
+    if (!isFormValid) return;
+
+    // Kalau attending yes & guests kosong → tampilkan error
+    if (formData.attending === 'yes' && formData.guests === '') {
+      setGuestsError('Jumlah orang wajib diisi (min. 1)');
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitStatus(null);
@@ -78,7 +131,8 @@ export default function RsvpSection() {
         {
           name: formData.name.trim(),
           attending: formData.attending,
-          guests: formData.attending === 'yes' ? formData.guests : 0,
+          guests:
+            formData.attending === 'yes' ? parseInt(formData.guests, 10) : 0,
           message: formData.message.trim() || null,
         },
       ]);
@@ -86,7 +140,8 @@ export default function RsvpSection() {
       if (error) throw error;
 
       setSubmitStatus('success');
-      setFormData({ name: '', attending: 'yes', guests: 1, message: '' });
+      setFormData({ name: '', attending: 'yes', guests: '', message: '' });
+      setGuestsError('');
 
       // Refresh list
       fetchRsvpList();
@@ -180,9 +235,14 @@ export default function RsvpSection() {
                   <button
                     key={opt.value}
                     type="button"
-                    onClick={() =>
-                      setFormData({ ...formData, attending: opt.value })
-                    }
+                    onClick={() => {
+                      setFormData({
+                        ...formData,
+                        attending: opt.value,
+                        guests: opt.value === 'yes' ? formData.guests : '',
+                      });
+                      setGuestsError('');
+                    }}
                     className={`flex flex-col items-center gap-2 p-3 sm:p-4 rounded-xl border transition-all ${
                       isActive
                         ? 'bg-gradient-to-br from-electric-purple/30 to-hot-pink/30 border-electric-purple/60 shadow-[0_0_20px_rgba(139,92,246,0.3)]'
@@ -219,21 +279,44 @@ export default function RsvpSection() {
               >
                 <label className="flex items-center gap-2 text-sm font-medium text-soft-white/80 mb-2">
                   <Users className="w-4 h-4" />
-                  Jumlah Orang (termasuk kamu)
+                  Jumlah Orang (termasuk kamu){' '}
+                  <span className="text-hot-pink">*</span>
                 </label>
+
                 <input
-                  type="number"
+                  type="text" // ← text bukan number biar bisa kosong di mobile
+                  inputMode="numeric" // ← keyboard angka di mobile
+                  pattern="[0-9]*"
                   min="1"
                   max="10"
                   value={formData.guests}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      guests: Math.max(1, Math.min(10, parseInt(e.target.value) || 1)),
-                    })
-                  }
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-soft-white focus:outline-none focus:border-electric-purple focus:ring-2 focus:ring-electric-purple/30 transition-all"
+                  onChange={handleGuestsChange}
+                  onBlur={handleGuestsBlur}
+                  placeholder="Isi jumlah kehadiran"
+                  className={`w-full px-4 py-3 rounded-xl bg-white/5 border text-soft-white placeholder:text-soft-white/30 focus:outline-none focus:ring-2 transition-all ${
+                    guestsError
+                      ? 'border-red-500/60 focus:border-red-500 focus:ring-red-500/30'
+                      : 'border-white/15 focus:border-electric-purple focus:ring-electric-purple/30'
+                  }`}
                 />
+
+                {/* Error message */}
+                <AnimatePresence>
+                  {guestsError && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="flex items-center gap-1.5 text-xs text-red-400 mt-2"
+                    >
+                      <AlertCircle className="w-3.5 h-3.5" />
+                      {guestsError}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+
+                {/* Helper text */}
+                
               </motion.div>
             )}
           </AnimatePresence>
@@ -262,7 +345,7 @@ export default function RsvpSection() {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isSubmitting || !formData.name.trim()}
+            disabled={isSubmitting || !isFormValid}
             className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-full bg-gradient-to-r from-electric-purple to-hot-pink text-white font-bold text-base sm:text-lg shadow-[0_0_25px_rgba(236,72,153,0.4)] hover:shadow-[0_0_40px_rgba(236,72,153,0.7)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? (
