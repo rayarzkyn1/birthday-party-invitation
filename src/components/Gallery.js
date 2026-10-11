@@ -2,7 +2,15 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, ImageIcon, X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Camera,
+  ImageIcon,
+  X,
+  ZoomIn,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+} from 'lucide-react';
 import { birthdayConfig } from '@/lib/birthday-config';
 
 /**
@@ -41,21 +49,13 @@ function GalleryPlaceholder({ index }) {
  * - lg (4 cols): hero image + tall image
  */
 const bentoLayout = [
-  // Item 0: Hero image - large on all breakpoints
   'col-span-2 row-span-1 sm:col-span-2 sm:row-span-2 lg:col-span-2 lg:row-span-2 aspect-[4/3] sm:aspect-auto sm:min-h-[320px] lg:min-h-[400px]',
-  // Item 1: Standard square
   'col-span-1 row-span-1 aspect-square',
-  // Item 2: Standard square
   'col-span-1 row-span-1 aspect-square',
-  // Item 3: Tall on lg
   'col-span-1 row-span-1 lg:row-span-2 aspect-square lg:aspect-auto lg:min-h-[320px]',
-  // Item 4: Standard square
   'col-span-1 row-span-1 aspect-square',
-  // Item 5: Wide on sm+
   'col-span-2 row-span-1 sm:col-span-2 aspect-[16/9] sm:aspect-video',
-  // Item 6: Standard square
   'col-span-1 row-span-1 aspect-square',
-  // Item 7: Standard square
   'col-span-1 row-span-1 aspect-square',
 ];
 
@@ -171,14 +171,20 @@ export default function Gallery() {
           transition={{ duration: 0.6 }}
           className="text-center mb-10 sm:mb-12 md:mb-14"
         >
+          {/* Icon row with camera + sparkles */}
           <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4">
             <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-hot-pink" />
-            <h2 className="section-title mb-0">BIRTHDAY GALLERY</h2>
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
+            <h2 className="section-title mb-0">MY GALLERY</h2>
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
             <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-hot-pink" />
           </div>
+
           <div className="section-divider" />
+
+          {/* Subtitle — lebih menarik & personal */}
           <p className="text-soft-white/60 mt-4 text-xs sm:text-sm">
-            Moments worth celebrating ✨
+            A collection of beautiful memories 📸
           </p>
         </motion.div>
 

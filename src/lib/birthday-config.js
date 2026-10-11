@@ -61,14 +61,14 @@ export const birthdayConfig = {
 
   // Gallery images (replace placeholder paths with actual images)
   gallery: [
-    { src: '/images/image1.png', alt: 'Wiyana birthday moment 1' },
-    { src: '/images/image2.png', alt: 'Wiyana birthday moment 2' },
-    { src: '/images/image3.png', alt: 'Wiyana birthday moment 3' },
-    { src: '/images/image4.png', alt: 'Wiyana birthday moment 4' },
-    { src: '/images/image5.png', alt: 'Wiyana birthday moment 5' },
-    { src: '/images/image6.png', alt: 'Wiyana birthday moment 6' },
-    { src: '/images/image7.png', alt: 'Wiyana birthday moment 7' },
-    { src: '/images/image8.png', alt: 'Wiyana birthday moment 8' },
+    { src: '/images/image1.jpeg', alt: 'Wiyana birthday moment 1' },
+    { src: '/images/image2.jpeg', alt: 'Wiyana birthday moment 2' },
+    { src: '/images/image3.jpeg', alt: 'Wiyana birthday moment 3' },
+    { src: '/images/image4.jpeg', alt: 'Wiyana birthday moment 4' },
+    { src: '/images/image5.jpeg', alt: 'Wiyana birthday moment 5' },
+    { src: '/images/image6.jpeg', alt: 'Wiyana birthday moment 6' },
+    { src: '/images/image7.jpeg', alt: 'Wiyana birthday moment 7' },
+    { src: '/images/image8.jpeg', alt: 'Wiyana birthday moment 8' },
   ],
 
   // Share configuration
